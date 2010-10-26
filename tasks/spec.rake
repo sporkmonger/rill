@@ -5,9 +5,9 @@ namespace :spec do
     t.spec_files = FileList['spec/**/*_spec.rb']
     t.spec_opts = ['--color', '--format', 'specdoc']
     if RCOV_ENABLED
-      if `which rcov`.strip == ""
-        STDERR.puts "Please install rcov:"
-        STDERR.puts "sudo gem install relevance-rcov"
+      if `which rcov`.strip == ''
+        STDERR.puts 'Please install rcov:'
+        STDERR.puts 'sudo gem install relevance-rcov'
         exit(1)
       end
       t.rcov = true
@@ -38,7 +38,7 @@ namespace :spec do
     task :verify => :rcov
   end
 
-  desc "Generate HTML Specdocs for all specs"
+  desc 'Generate HTML Specdocs for all specs'
   Spec::Rake::SpecTask.new(:specdoc) do |t|
     specdoc_path = File.expand_path(
       File.join(File.dirname(__FILE__), '../specdoc/'))
@@ -46,25 +46,25 @@ namespace :spec do
 
     output_file = File.join(specdoc_path, 'index.html')
     t.spec_files = FileList['spec/**/*_spec.rb']
-    t.spec_opts = ["--format", "\"html:#{output_file}\"", "--diff"]
+    t.spec_opts = ['--format', "\"html:#{output_file}\"", '--diff']
     t.fail_on_error = false
   end
 
   namespace :rcov do
-    desc "Browse the code coverage report."
-    task :browse => "spec:rcov" do
-      require "launchy"
-      Launchy::Browser.run("coverage/index.html")
+    desc 'Browse the code coverage report.'
+    task :browse => 'spec:rcov' do
+      require 'launchy'
+      Launchy::Browser.run('coverage/index.html')
     end
   end
 end
 
 if RCOV_ENABLED
-  desc "Alias to spec:verify"
-  task "spec" => "spec:verify"
+  desc 'Alias to spec:verify'
+  task 'spec' => 'spec:verify'
 else
-  desc "Alias to spec:normal"
-  task "spec" => "spec:normal"
+  desc 'Alias to spec:normal'
+  task 'spec' => 'spec:normal'
 end
 
-task "clobber" => ["spec:clobber_rcov"]
+task 'clobber' => ['spec:clobber_rcov']

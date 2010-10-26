@@ -1,4 +1,4 @@
-# Copyright 2010 Bob Aman
+# Copyright 2010 Google Inc
 # 
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,4 +12,11 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require "rill/version"
+require 'rill/version'
+
+module Rill
+  def self.parse_json(data)
+    require 'rill/json_parser'
+    return ::Rill::JSONParser.parse(data)
+  end
+end

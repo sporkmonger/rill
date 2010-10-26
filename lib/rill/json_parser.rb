@@ -12,15 +12,12 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-# Used to prevent the class/module from being loaded more than once
-unless defined? Rill::VERSION
-  module Rill
-    module VERSION
-      MAJOR = 0
-      MINOR = 1
-      TINY  = 0
+require 'json'
 
-      STRING = [MAJOR, MINOR, TINY].join('.')
+module Rill
+  module JSONParser
+    def parse(data)
+      return nil
     end
   end
 end
