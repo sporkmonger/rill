@@ -20,3 +20,5 @@ module Rill
     return ::Rill::JSONParser.parse(data)
   end
 end
+
+require 'rill/object_types/note'

@@ -12,16 +12,23 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'json'
-
-require 'rill/stream'
-
 module Rill
-  module JSONParser
-    def self.parse(data)
-      # TODO(bobaman): Maybe do some intelligent switching to figure out
-      # if this data is a stream, a single activity, or just an object.
-      return ::Rill::Stream.parse_json(data)
+  module ObjectTypes
+    def self.[](type)
+      @registered_object_types ||= {}
+      return @registered_object_types[type]
+    end
+
+    def self.[]=(type, klass)
+      @registered_object_types ||= {}
+      @registered_object_types[type] = klass
+    end
+
+    def self.to_hash
+      return @registered_object_types ||= {}
+    end
+    class <<self
+      alias_method :to_h, :to_hash
     end
   end
 end

@@ -1,9 +1,11 @@
 # Rill
 
-Homepage::  <http://rill.rubyforge.org/>
-Author::    [Bob Aman](mailto:bob@sporkmonger.com)
-Copyright:: Copyright © 2010 Google Inc
-License::   Apache 2.0
+<dl>
+  <dt>Homepage</dt><dd><http://rill.rubyforge.org/></dd>
+  <dt>Author</dt><dd>[Bob Aman](mailto:bob@sporkmonger.com)</dd>
+  <dt>Copyright</dt><dd>Copyright © 2010 Google Inc</dd>
+  <dt>License</dt><dd>Apache 2.0</dd>
+</dl>
 
 # Description
 

@@ -12,16 +12,33 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'json'
-
-require 'rill/stream'
+require 'addressable/uri'
+require 'rill/object'
+require 'rill/object_types'
 
 module Rill
-  module JSONParser
-    def self.parse(data)
-      # TODO(bobaman): Maybe do some intelligent switching to figure out
-      # if this data is a stream, a single activity, or just an object.
-      return ::Rill::Stream.parse_json(data)
+  module ObjectTypes
+    class Note < ::Rill::Object
+      def content
+        return @content ||= nil
+      end
+
+      def content=(new_content)
+        if !new_content.respond_to?(:to_str)
+          raise TypeError, "Expected String, got #{new_content.class}."
+        end
+        @content = new_content.to_str
+      end
+
+      def parse_json(data)
+        super(data)
+        if data['content']
+          self.content = data['content']
+        end
+        return self
+      end
     end
   end
 end
+
+::Rill::ObjectTypes['note'] = ::Rill::ObjectTypes::Note
