@@ -123,11 +123,31 @@ describe Rill::Activity, 'parsed from invalid object' do
   end
 end
 
-describe Rill::Activity, 'with an empty object' do
-  before do
-    @activity = Rill::Activity.parse_json({})
+describe Rill::Activity, 'parsed from empty string' do
+  it 'should raise a JSON parse error' do
+    (lambda do
+      Rill::Activity.new.parse_json('')
+    end).should raise_error(JSON::ParserError)
   end
+end
 
+describe Rill::Activity, 'parsed from invalid JSON string' do
+  it 'should raise a JSON parse error' do
+    (lambda do
+      Rill::Activity.new.parse_json('This is not JSON.')
+    end).should raise_error(JSON::ParserError)
+  end
+end
+
+describe Rill::Activity, 'parsed from invalid object' do
+  it 'should raise a type error' do
+    (lambda do
+      Rill::Activity.new.parse_json(42)
+    end).should raise_error(TypeError)
+  end
+end
+
+shared_examples_for 'empty activity' do
   it 'should parse an empty activity' do
     @activity.actor.should be_nil
     @activity.verb.should == 'post' # Default verb
@@ -140,6 +160,38 @@ describe Rill::Activity, 'with an empty object' do
     @activity.title.should be_nil
     @activity.body.should be_nil
   end
+end
+
+describe Rill::Activity, 'with an empty activity' do
+  before do
+    @activity = Rill::Activity.parse_json({})
+  end
+
+  it_should_behave_like 'empty activity'
+end
+
+describe Rill::Activity, 'with an empty unparsed activity' do
+  before do
+    @activity = Rill::Activity.parse_json('{}')
+  end
+
+  it_should_behave_like 'empty activity'
+end
+
+describe Rill::Activity, 'with an empty activity' do
+  before do
+    @activity = Rill::Activity.new.parse_json({})
+  end
+
+  it_should_behave_like 'empty activity'
+end
+
+describe Rill::Activity, 'with an empty unparsed activity' do
+  before do
+    @activity = Rill::Activity.new.parse_json('{}')
+  end
+
+  it_should_behave_like 'empty activity'
 end
 
 describe Rill::Activity, 'with an object that contains invalid actor' do
