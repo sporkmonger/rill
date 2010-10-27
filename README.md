@@ -1,8 +1,8 @@
 # Rill
 
 <dl>
-  <dt>Homepage</dt><dd><http://rill.rubyforge.org/></dd>
-  <dt>Author</dt><dd>[Bob Aman](mailto:bob@sporkmonger.com)</dd>
+  <dt>Homepage</dt><dd><a href="http://rill.rubyforge.org/">http://rill.rubyforge.org/</a></dd>
+  <dt>Author</dt><dd><a href="mailto:bob@sporkmonger.com">Bob Aman</a></dd>
   <dt>Copyright</dt><dd>Copyright © 2010 Google Inc</dd>
   <dt>License</dt><dd>Apache 2.0</dd>
 </dl>

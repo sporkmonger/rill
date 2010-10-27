@@ -73,9 +73,9 @@ module Rill
       # Not a big fan of this solution, but it's less awful than most of the
       # other options.
       if new_time.respond_to?(:iso8601)
-        @time = Time.parse(new_time.iso8601)
+        @time = Time.parse(new_time.iso8601).utc
       elsif new_time.respond_to?(:to_str)
-        @time = Time.parse(new_time.to_str)
+        @time = Time.parse(new_time.to_str).utc
       else
         raise TypeError, "Expected Time or String, got #{new_time.class}."
       end

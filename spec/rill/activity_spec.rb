@@ -17,6 +17,88 @@ require 'spec_helper'
 require 'rill/activity'
 require 'json'
 
+describe Rill::Activity do
+  before do
+    @activity = Rill::Activity.new
+  end
+
+  it 'should raise a type error for an invalid actor' do
+    (lambda do
+      @activity.actor = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid verb' do
+    (lambda do
+      @activity.verb = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid object' do
+    (lambda do
+      @activity.object = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid target' do
+    (lambda do
+      @activity.target = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid timestamp' do
+    (lambda do
+      @activity.time = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid generator' do
+    (lambda do
+      @activity.generator = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid provider' do
+    (lambda do
+      @activity.provider = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid title' do
+    (lambda do
+      @activity.title = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should raise a type error for an invalid body' do
+    (lambda do
+      @activity.body = 42
+    end).should raise_error(TypeError)
+  end
+
+  it 'should correctly handle timestamps as strings' do
+    @activity.time = '1994-11-05T08:15:30-05:00'
+    @activity.time.year.should == 1994
+    @activity.time.month.should == 11
+    @activity.time.day.should == 5
+    @activity.time.hour.should == 13
+    @activity.time.min.should == 15
+    @activity.time.sec.should == 30
+    @activity.time.zone.should == 'UTC'
+  end
+
+  it 'should correctly handle timestamps as time objects' do
+    @activity.time = Time.parse('1994-11-05T08:15:30-05:00')
+    @activity.time.year.should == 1994
+    @activity.time.month.should == 11
+    @activity.time.day.should == 5
+    @activity.time.hour.should == 13
+    @activity.time.min.should == 15
+    @activity.time.sec.should == 30
+    @activity.time.zone.should == 'UTC'
+  end
+end
+
 describe Rill::Activity, 'parsed from empty string' do
   it 'should raise a JSON parse error' do
     (lambda do
@@ -175,5 +257,40 @@ describe Rill::Activity, 'with a complex activity' do
     @activity.object.content.should == 'This is a shared post.'
     @activity.object.permalink.to_str.should ==
       'http://www.examples.com/post/12345'
+  end
+
+  it 'should have an object' do
+    @activity.target.name.should == 'Bob'
+  end
+
+  it 'should have a timestamp' do
+    @activity.time.year.should == 1994
+    @activity.time.month.should == 11
+    @activity.time.day.should == 5
+    @activity.time.hour.should == 13
+    @activity.time.min.should == 15
+    @activity.time.sec.should == 30
+    @activity.time.zone.should == 'UTC'
+  end
+
+  it 'should have a generator' do
+    @activity.generator.name.should == 'ACME Smartphone App'
+  end
+
+  it 'should have a service provider' do
+    @activity.provider.name.should == 'ACME Activity Aggregator'
+    @activity.provider.permalink.to_str.should ==
+      'http://www.acme.com/activity/aggregator'
+  end
+
+  it 'should have a title' do
+    @activity.title.should == 'Alice shared a post with Bob.'
+  end
+
+  it 'should have a body' do
+    @activity.body.should ==
+      'Alice shared a post with Bob: ' +
+      '<div class="post">This is a shared post.</div> ' +
+      'Sent from an ACME Smartphone.'
   end
 end
