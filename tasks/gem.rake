@@ -22,6 +22,8 @@ namespace :gem do
     s.extra_rdoc_files = %w( README )
     s.rdoc_options.concat ['--main',  'README']
 
+    s.add_runtime_dependency('json', '>= 1.1.9')
+
     s.add_development_dependency('rake', '~> 0.8.3')
     s.add_development_dependency('rspec', '~> 1.1.11')
     s.add_development_dependency('launchy', '~> 0.3.2')
